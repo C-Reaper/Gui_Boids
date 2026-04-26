@@ -1,206 +1,78 @@
-# Gui_Boids
-
+# Project README
 
 ## Overview
-Interactive boids flocking simulation implementing Craig Reynolds' algorithm for emergent group behavior from simple local rules.
+This project is a simulation of flocking behavior in birds using C/C++ and a graphical library. The main focus is on the interaction between individual "birds" (represented as simple entities moving according to certain rules) and their environment.
 
-## Core Algorithm
+## Features
+- **Flocking Behavior**: Birds follow simple rules to maintain alignment, cohesion, and separation.
+- **User Interaction**: Users can control a bird with the mouse.
+- **Cross-Platform Compilation**:
+  - Linux
+  - Windows
+  - Wine (Linux cross-compilation for Windows)
+  - WebAssembly
 
-### Three Steering Behaviors
-1. **Separation**: Avoid crowding nearby boids (repulsion)
-2. **Alignment**: Match velocity of nearby boids  
-3. **Cohesion**: Move toward average position of nearby boids (attraction)
-
-### Key Characteristics
-- Each boid only considers nearby boids
-- Local neighborhood based on distance
-- Weighted combination of three behaviors
-- Emergent complex behavior from simple rules
-
-### Physics
-- Velocity: Speed and direction of movement
-- Acceleration: Velocity change from steering forces
-- Position: Updated by velocity each frame
-- Boundary: Wrap-around or bouncing at edges
-
-### Visualization
-- Each boid as triangle or circle
-- Color-coded groups
-- Direction/velocity vectors
-- Trail visualization (optional)
-
-### Applications
-- Game creature AI
-- Visual effects
-- Educational demonstration  
-- Crowd simulation
-- Particle systems
-
-## Implementation Details
-- Dynamic boid array
-- Spatial neighborhood queries
-- Vector force calculations
-- Physics integration
-- Real-time rendering
-
-## Parameters
-- Neighborhood radius: Distance for boid consideration
-- Behavior weights: Relative influence of three rules
-- Max velocity: Speed limits
-- Acceleration limits
-
-## Performance
-- Real-time simulation
-- Efficient neighbor finding
-- Scalable to thousands of boids
-- Frame-rate independent
-
-## Use Cases
-- Game AI (flocking behavior)
-- Visual effects (birds, fish, crowds)
-- Nature simulation
-- Educational graphics
-- Swarm robotics simulation
-
-
-## Building the Project
-
-### Prerequisites
-- C/C++ Compiler (GCC, Clang, or MSVC)
-- Make utility
-- Standard development tools
-
-### Build Steps
-
-1. Navigate to project directory:
-```bash
-cd Gui_Boids
-```
-
-2. Build the project:
-```bash
-make -f Makefile.(os) all
-```
-
-3. For clean rebuild:
-```bash
-make -f Makefile.(os) clean
-make -f Makefile.(os) all
-```
-
-4. If there are ./bin and ./libs directories, build libs with:
-```bash
-make -f Makefile.(os) cleanlib
-make -f Makefile.(os) lib
-```
-
-### Build Options
-```bash
-make -f Makefile.(os) all         # build output
-make -f Makefile.(os) do        # build + exe output
-make -f Makefile.(os) clean   # Remove build artifacts
-```
-
-## Running the Project
-
-Execute the compiled binary:
-
-```bash
-./build/Main(.exe)
-```
-
-Or using make:
-```bash
-make -f Makefile.(os) exe
-```
-
-## Project Organization
-
+## Project Structure
 ```
 Gui_Boids/
-├── src/
+├── build/              # .exe files produced by Main.c
+├── src/                # Source code
 │   ├── Main.c          # Entry point
-│   └── *.c             # Implementation files
-├── Makefile            # Build configuration
+│   └── *.h             # Standalone Header-based C-files, without *.c files that implement it
+├── Makefile.linux      # Linux Build configuration
+├── Makefile.windows    # Windows Build configuration
+├── Makefile.wine       # Wine Build configuration
+├── Makefile.web        # Emscripten Build configuration
 └── README.md           # This file
+└── LICENSE
+└── .gitignore
 ```
 
-## Technical Details
+### Prerequisites
+- C/C++ Compiler and Debugger (GCC, Clang)
+- Make utility
+- Standard development tools
+- Libraries needed in specific projects:
+  - Linux: X11 for GUI, PNG and JPEG for image handling
+  - Windows: user32, gdi32, winmm
+  - Wine: No additional libraries required
+  - WebAssembly: emcc (Emscripten compiler)
 
-### Language: C/C++
-- Performance-oriented
-- Direct hardware access where needed
-- Memory efficient
-- Widely portable
+## Build & Run
 
-### Key Technologies
-- Standard C library
-- System-specific libraries as needed
-- Algorithm optimization
-- Efficient data structures
+### Linux
+```sh
+cd Gui_Boids
+make -f Makefile.linux all
+./build/Main
+```
 
-### Code Quality
-- Clean, readable implementation
-- Proper error handling
-- Resource management
-- Well-documented algorithms
+### Windows
+```sh
+cd Gui_Boids
+make -f Makefile.windows all
+build\Main.exe
+```
 
-## Development Notes
+### Wine (Linux Cross-Compile for Windows)
+```sh
+cd Gui_Boids
+make -f Makefile.wine all
+WINEPREFIX=~/wine64 WINEARCH=win64 wine build/Main.exe
+```
 
-### Architecture Decisions
-- Modular design for reusability
-- Efficient algorithms for performance
-- Clear separation of concerns
-- Extensible structure
+### WebAssembly
+```sh
+cd Gui_Boids
+make -f Makefile.web all
+emrun --no_browser --port 8080 build/index.html
+```
 
-### Performance Optimizations
-- Algorithm efficiency
-- Memory layout optimization
-- Cache-conscious programming
-- Minimal overhead
+# Build Steps
+- `make -f Makefile.(os) all`: Compiles the project and generates the executable.
+- `make -f Makefile.(os) do`: Compiles the project, generates the executable, and runs it.
+- `make -f Makefile.(os) clean`: Removes build artifacts to prepare for a clean rebuild.
 
-### Portability
-- Cross-platform compatible
-- Platform-specific optimizations where possible
-- Standard library usage
-- No external dependencies (where feasible)
-
-## Troubleshooting
-
-### Build Issues
-- Ensure compiler is installed
-- Check file paths and permissions
-- Verify Make installation
-- Review compiler error messages
-
-### Runtime Issues
-- Check input data validity
-- Verify file accessibility
-- Ensure sufficient memory
-- Review output format
-
-### Performance Issues
-- Check compiler optimization flags
-- Profile hot code paths
-- Review algorithm complexity
-- Consider input size
-
-## Future Improvements
-
-Potential enhancements:
-- Additional optimization opportunities
-- Extended functionality
-- Platform-specific optimizations
-- Performance profiling
-
-## References
-
-For technical background:
-- Algorithm textbooks
-- Computer science references
-- Language documentation
-- Online educational resources
-
----
-
-*Project implementing practical algorithms and data structures in C/C++*
+# Build Options
+- `make -f Makefile.(os) all` or `make -f Makefile.(os) do` builds the output.
+- `make -f Makefile.(os) clean` removes build artifacts for a clean rebuild.
